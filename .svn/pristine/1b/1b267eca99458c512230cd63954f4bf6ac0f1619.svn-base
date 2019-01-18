@@ -1,0 +1,44 @@
+package ua.nure.dudka.practice3;
+
+
+public class Part2 {
+    public static String convert(String input) {
+        StringBuilder minValuesBuilder = new StringBuilder();
+        StringBuilder maxValuesBuilder = new StringBuilder();
+        int minLength = Integer.MAX_VALUE;
+        int maxLength = 0;
+        String[] lines;
+
+        lines = input.replaceAll("\\p{P}", " ").split("\\s+");
+
+        for (String word : lines) {
+            if (word.length() > maxLength) {
+                maxLength = word.length();
+            } else if (word.length() < minLength) {
+                minLength = word.length();
+            }
+        }
+
+        minValuesBuilder.append("Min: ");
+        maxValuesBuilder.append("Max: ");
+
+        for (String word : lines) {
+            if (word.length() == maxLength && maxValuesBuilder.indexOf(word) == -1) {
+                maxValuesBuilder.append(word).append(", ");
+            } else if (word.length() == minLength && minValuesBuilder.indexOf(word) == -1) {
+                minValuesBuilder.append(word).append(", ");
+            }
+        }
+
+        maxValuesBuilder.delete(maxValuesBuilder.lastIndexOf(", "), maxValuesBuilder.length());
+        minValuesBuilder.delete(minValuesBuilder.lastIndexOf(", "), minValuesBuilder.length());
+
+        return minValuesBuilder + System.lineSeparator() + maxValuesBuilder + System.lineSeparator();
+    }
+
+    public static void main(String[] args) {
+        String input = Util.readFile("part2.txt");
+
+        System.out.println(Part2.convert(input));
+    }
+}
